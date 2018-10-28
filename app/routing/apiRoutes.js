@@ -1,6 +1,6 @@
 //Dependencies
-const express = require('express');
-const path = require('path');
+var express = require('express');
+var path = require('path');
 
 //do i need to put a const for apiRoute in this page?
 
@@ -15,8 +15,8 @@ module.exports = function (app) {
     });
  app.post("/api/friends", function(req, res){
     //grabs the new users scores to compare with friends in the friends array
-    const newFriendScore = req.body.scores;
-    const scoresArray = [];
+    var newFriendScore = req.body.scores;
+    var scoresArray = [];
     var friendCount = 0;
     var bestMatch = 0;
 
@@ -24,7 +24,7 @@ module.exports = function (app) {
     for (var i=0; i<friends.length; i++){
         var totalDifference = 0;
         //run through the scores in the friends array to compare friends
-        for (var j=0; j<newFriendScore.length, j++){            
+        for (var j=0; j<newFriendScore.length; j++){            
             totalDifference +- (Math.abs(parseInt(friends[i].scores[j])- parseInt(newFriendScore[j])));
         }
         //push into the scoresArray
@@ -37,7 +37,7 @@ module.exports = function (app) {
         }
     }
     //retun bestMatch data
-    const veryBestFriend = friends[bestMatch];
+    var veryBestFriend = friends[bestMatch];
     //push new submission into the friends array
 
     friends.push(req.body);

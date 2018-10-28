@@ -1,22 +1,22 @@
 //Dependencies
 
-const express = require('express');
-const path = require('path');
+var express = require('express');
+var path = require('path');
 // there is an error being thrown about apiRoutes when I run node.js
 
 //Setting up express App
 
-const app = express();
+var app = express();
 
 //Setting port to 3000
-const PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 3000;
 
 // Sets up Express app to handle data parsing
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 
 require('./app/routing/apiRoutes')(app)
-require('.app/routing/htmlRoutes')(app)
+require('./app/routing/htmlRoutes')(app)
 
 
 // Code that starts the server to begin listening
