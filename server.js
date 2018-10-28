@@ -2,10 +2,11 @@
 
 var express = require('express');
 var path = require('path');
-// there is an error being thrown about apiRoutes when I run node.js
+
+var api = require('./app/routing/apiRoutes');
+var html = require('./app/routing/htmlRoutes');
 
 //Setting up express App
-
 var app = express();
 
 //Setting port to 3000
@@ -15,9 +16,8 @@ var PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 
-require('./app/routing/apiRoutes')(app)
-require('./app/routing/htmlRoutes')(app)
-
+app.use(api);
+app.use(html);
 
 // Code that starts the server to begin listening
 app.listen(PORT, function() {
