@@ -10,14 +10,11 @@
      <!--Font Awesome -->
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/fontawesome.css" integrity="sha384-HU5rcgG/yUrsDGWsVACclYdzdCcn5yU8V/3V84zSrPDHwZEdjykadlgI6RHrxGrJ" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="server.js"></script>
 </head>
 <body>
     <div class="container">
             <h2>Survey Questions</h2>
             <hr>
-
             <h3><strong>About You</strong></h3>
             <h4>Name (Required)</h4>
             <input type="text" id="name" class="form-control" required>
@@ -144,17 +141,64 @@
             <br>
         
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit"><i class="fa fa-check-circle" aria-hidden="true"></i>
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit" onclick = "submitSurvey()"><i class="fa fa-check-circle" aria-hidden="true"></i>
              Submit</button>
-        
+                    
             <hr>
             <footer class="footer">
               <div class="container">
                 <p><a href="/api/friends">API Friends List</a> | <a href="https://MarkPish.github.io/FriendFinder/">GitHub Repo</a></p>
               </div>
             </footer>
-            
+
+            <div class = "modal" id="friendMatchModal" style="width:500px;">
+              <div class="modal-content">
+                  <h1 id='matchName'></h1>
+                  <p id="moreInfo"></p>
+              </div>
+            </div>            
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"crossorigin="anonymous"></script>
+    
+    <script>   
+      //Function to submit user survey values
+      function submitSurvey() {
+        event.preventDefault();
+        if ($("#name").val().trim() === "" || $("#photo").val().trim() === "") {
+          alert("Please complete all questions.");
+          return;
+        } else {
+          var surveyInput = {
+            name: $("#name").val().trim(),
+            photo: $("#photo").val().trim(),
+            scores: [
+              $("#q1").val().trim(),
+              $("#q2").val().trim(),
+              $("#q3").val().trim(),
+              $("#q4").val().trim(),
+              $("#q5").val().trim(),
+              $("#q6").val().trim(),
+              $("#q7").val().trim(),
+              $("#q8").val().trim(),
+              $("#q9").val().trim(),
+              $("#q10").val().trim(),
+            ]
+          }
+   ​
+          //Adding in friend match name and image to modal 
+          $.post("/api/friends", surveyInput)
+            .done(function (data) {
+              $(".modal-content").html("<h1>Your match is " + data.name + "!</h1>");
+              // $("#matchImg").attr("src", data.photo);
+              $('<img src="' + data.photo + '">').appendTo(".modal-content");
+              $("#friendMatchModal").modal();
+            })
+        }
+      }
+   ​
+    </script>
     
 </body>
 </html>
