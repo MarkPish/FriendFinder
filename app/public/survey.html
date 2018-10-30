@@ -141,7 +141,8 @@
             <br>
         
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit" onclick = "submitSurvey()"><i class="fa fa-check-circle" aria-hidden="true"></i>
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
              Submit</button>
                     
             <hr>
@@ -151,7 +152,7 @@
               </div>
             </footer>
 
-            <div class = "modal" id="friendMatchModal" style="width:500px;">
+            <div class = "modal" id="friendMatchModal" style="width:300px;">
               <div class="modal-content">
                   <h1 id='matchName'></h1>
                   <p id="moreInfo"></p>
@@ -162,9 +163,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"crossorigin="anonymous"></script>
     
-    <script>   
-      //Function to submit user survey values
-      function submitSurvey() {
+    <script>
+      $('#submit').on(click, function(event) {
+              
         event.preventDefault();
         if ($("#name").val().trim() === "" || $("#photo").val().trim() === "") {
           alert("Please complete all questions.");
@@ -186,6 +187,8 @@
               $("#q10").val().trim(),
             ]
           }
+        }
+      }); 
    ​
           //Adding in friend match name and image to modal 
           $.post("/api/friends", surveyInput)
@@ -195,9 +198,7 @@
               $('<img src="' + data.photo + '">').appendTo(".modal-content");
               $("#friendMatchModal").modal();
             })
-        }
-      }
-   ​
+        
     </script>
     
 </body>

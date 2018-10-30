@@ -21,15 +21,15 @@ router.post("/api/friends", function(req, res){
         var totalDifference = 0;
         //run through the scores in the friends array to compare friends
         for (var j=0; j<newFriendScore.length; j++){            
-            totalDifference +- (Math.abs(parseInt(friends[i].scores[j])- parseInt(newFriendScore[j])));
+            totalDifference += (Math.abs(parseInt(friends[i].scores[j]) - parseInt(newFriendScore[j])));
         }
         //push into the scoresArray
         scoresArray.push(totalDifference);
     }
     // after all friends are compared find the best match based on similar scores
-    for (var i=0; i<scoresArray.length; i++){
-        if(scoresArray[i]<= scoresArray[bestMatch]){
-            bestMatch = i;
+    for (var k=0; k<scoresArray.length; k++){
+        if(scoresArray[k]<= scoresArray[bestMatch]){
+            bestMatch = k;
         }
     }
     //retun bestMatch data
